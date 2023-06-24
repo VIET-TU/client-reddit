@@ -20,21 +20,23 @@ const UpvoteSection = ({ post }: UpvoteSectionProps) => {
 
 	const upvote = async (postId: string) => {
 		setLoadingState('upvote-loading')
-
-		await vote({
-			variables: { inputVoteValue: VoteType.Upvote, postId: parseInt(postId) },
-		})
-		setLoadingState('not-loading')
+		try {
+			await vote({
+				variables: { inputVoteValue: VoteType.Upvote, postId: parseInt(postId) },
+			})
+			setLoadingState('not-loading')
+		} catch (error) {}
 	}
 
 	const downvote = async (postId: string) => {
 		setLoadingState('downvote-loading')
+		try {
+			await vote({
+				variables: { inputVoteValue: VoteType.Downvote, postId: parseInt(postId) },
+			})
 
-		await vote({
-			variables: { inputVoteValue: VoteType.Downvote, postId: parseInt(postId) },
-		})
-
-		setLoadingState('not-loading')
+			setLoadingState('not-loading')
+		} catch (error) {}
 	}
 
 	return (

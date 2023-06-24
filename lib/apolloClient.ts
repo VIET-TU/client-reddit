@@ -26,7 +26,9 @@ const errorLink = onError((errors) => {
 		errors.graphQLErrors[0].extensions?.code === 'UNAUTHENTICATED' &&
 		errors.response
 	) {
+		errors.graphQLErrors = undefined
 		errors.response = undefined
+		errors.networkError = undefined
 		Router.push('/login')
 	}
 })
@@ -45,7 +47,7 @@ function createApolloClient(headers: IncomingHttpHeaders | null = null) {
 	}
 
 	const httpLink = new HttpLink({
-		uri: 'https://reddit-4kd0.onrender.com/graphql', // Server URL (must be absolute)
+		uri: 'http://localhost:4000/graphql', // Server URL (must be absolute)
 		credentials: 'include', // Additional fetch() options like `credentials` or `headers`
 		fetch: enhancedFetch,
 	})
